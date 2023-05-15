@@ -1,0 +1,126 @@
+#!/bin/bash
+
+# Garden Model in cairo university 
+# Latitude: 30° 01' 39.36" N  Longitude: 31° 12' 36.50" E
+# Entity Type Names Must Start With A Capital Letter
+# Follows schema.org  and Data Model Guidelines
+
+curl -iX POST \
+  --url 'http://localhost:1026/v2/op/update' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "actionType":"append",
+  "entities":[
+    {
+"id": "urn:ngsi-ld:Garden:001",
+    "type": "Garden",
+    "address":{
+      "type":"property",
+      "value":{
+      "addressLocality": "Giza",
+      "addressCountry" : "EG",
+      "streetAddress": "1 Gamaa"
+      }
+    },
+    "location": {
+        "type": "geo:json",
+        "value": {
+            "type": "Point",
+            "coordinates": [39.36, 36.50]
+        }
+    },
+    "name": {
+        "type": "Text",
+        "value": "Our Garden"
+    }
+    }
+  ]
+}'
+
+
+# Provisioning A Service Groups
+# api key is for authentication
+
+# curl -iX POST \
+#   'http://localhost:4041/iot/services' \
+#   -H 'Content-Type: application/json' \
+#   -H 'fiware-service: openiot' \
+#   -H 'fiware-servicepath: /' \
+#   -d '{
+#   "services": [
+#     {
+#      "apikey":      "a1cc95dd-1b0c-41a9-83aa-f2239a3e22e5",  
+#      "cbroker":     "http://orion:1026",
+#      "entity_type": "Thing",
+#      "resource":    "/iot/json"
+#    }
+#  ]
+# }'
+
+# # Adding devices 
+
+curl -iX POST \
+  'http://localhost:4041/iot/devices' \
+  -H 'Content-Type: application/json' \
+  -H 'fiware-service: openiot' \
+  -H 'fiware-servicepath: /' \
+  -d '{
+    "devices": [
+      {
+        "device_id":   "soilmoisture001",
+        "entity_name": "urn:ngsi-ld:SoilMoisture:001",
+        "entity_type": "SoilMoisture",
+        "attributes": [
+        {"object_id": "sm", "name": "soilmoisture", "type": "Integer" }
+        ],
+        "static_attributes": [
+        { "name":"refGarden", "type": "Relationship", "value": "urn:ngsi-ld:Garden:001"}
+        ]
+      },
+      {
+        "device_id":   "temperature001",
+        "entity_name": "urn:ngsi-ld:Temperature:001",
+        "entity_type": "Temperature",
+        "attributes": [
+        {"object_id": "t", "name": "temperature", "type": "Integer" }
+        ],
+        "static_attributes": [
+        { "name":"refGarden", "type": "Relationship", "value": "urn:ngsi-ld:Garden:001"}
+        ]
+      },
+      {
+        "device_id":   "humidity001",
+        "entity_name": "urn:ngsi-ld:Humidity:001",
+        "entity_type": "Humidity",
+        "attributes": [
+        {"object_id": "h", "name": "humidity", "type": "Integer" }
+        ],
+        "static_attributes": [
+        { "name":"refGarden", "type": "Relationship", "value": "urn:ngsi-ld:Garden:001"}
+        ]
+      }
+    ]
+    
+  }'
+
+
+#  adding actuator
+#       ,
+#       {
+#         "device_id":   "pump001",
+#         "entity_name": "urn:ngsi-ld:Pump:001",
+#         "entity_type": "Pump",
+#         "transport": "HTTP",
+#         "endpoint": "http://iot-sensors:3001/iot/bell001",   <-- should be address for the pump 
+#         "commands": [
+#         {"name": "on","type": "command"},
+#         {"name": "off","type": "command"}
+#         ],
+#         "attributes": [
+#         {"object_id": "s", "name": "state", "type":"Text"},
+#         {"object_id": "th", "name": "threshold", "type":"Integer"}
+#         ],
+#         "static_attributes": [
+#         { "name":"refGarden", "type": "Relationship", "value": "urn:ngsi-ld:Garden:001"}
+#         ]
+#       }

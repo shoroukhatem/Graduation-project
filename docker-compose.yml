@@ -17,12 +17,12 @@ services:
       - fiware_network
 
   iot-agent:
-    image:  fiware/iotagent-json:latest
+    image: fiware/iotagent-json:latest
     hostname: iot-agent
     container_name: fiware-iot-agent
     expose:
-        - "4041"
-        - "7896"
+      - "4041"
+      - "7896"
     ports:
       - "4041:4041"
       - "7896:7896"
@@ -72,25 +72,23 @@ services:
       - fiware_network
 
   crate-db:
-    image: crate:4.1.4
+    image: crate:latest
     hostname: crate-db
     ports:
-        - "4200:4200"
-        - "4300:4300"
-    command:
-        crate -Cauth.host_based.enabled=false  -Ccluster.name=democluster -Chttp.cors.enabled=true
-        -Chttp.cors.allow-origin="*"
+      - "4200:4200"
+      - "4300:4300"
+    command: crate -Cauth.host_based.enabled=false -Ccluster.name=democluster -Chttp.cors.enabled=true -Cnode.store.allow_mmap=false -Chttp.cors.allow-origin='*'
     environment:
-        - CRATE_HEAP_SIZE=2g
+      - CRATE_HEAP_SIZE=2g
+    volumes:
+      - ./data/crate:/data/crate-db-data
 
   grafana:
     image: grafana/grafana
     depends_on:
-        - crate-db
+      - crate-db
     ports:
-        - "3003:3000"
-    environment:
-        - GF_INSTALL_PLUGINS=https://github.com/orchestracities/grafana-map-plugin/archive/master.zip;grafana-map-plugin,grafana-clock-panel,grafana-worldmap-panel
+      - "3003:3000"
 
 networks:
   fiware_network:

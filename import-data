@@ -41,21 +41,21 @@ curl -iX POST \
 # Provisioning A Service Groups
 # api key is for authentication
 
-# curl -iX POST \
-#   'http://localhost:4041/iot/services' \
-#   -H 'Content-Type: application/json' \
-#   -H 'fiware-service: openiot' \
-#   -H 'fiware-servicepath: /' \
-#   -d '{
-#   "services": [
-#     {
-#      "apikey":      "a1cc95dd-1b0c-41a9-83aa-f2239a3e22e5",  
-#      "cbroker":     "http://orion:1026",
-#      "entity_type": "Thing",
-#      "resource":    "/iot/json"
-#    }
-#  ]
-# }'
+curl -iX POST \
+  'http://localhost:4041/iot/services' \
+  -H 'Content-Type: application/json' \
+  -H 'fiware-service: openiot' \
+  -H 'fiware-servicepath: /' \
+  -d '{
+  "services": [
+    {
+     "apikey":      "a1cc95dd-1b0c-41a9-83aa-f2239a3e22e5",  
+     "cbroker":     "http://orion:1026",
+     "entity_type": "Thing",
+     "resource":    "/iot/json"
+   }
+ ]
+}'
 
 # # Adding devices 
 
@@ -99,28 +99,54 @@ curl -iX POST \
         { "name":"refGarden", "type": "Relationship", "value": "urn:ngsi-ld:Garden:001"}
         ]
       }
+      ,
+      {
+        "device_id":   "pump001",
+        "entity_name": "urn:ngsi-ld:Pump:001",
+        "entity_type": "Pump",
+        "transport": "HTTP",
+        "endpoint": "http://localhost:5002/",
+        "commands": [
+        {"name": "on","type": "command"},
+        {"name": "off","type": "command"}
+        ],
+        "attributes": [
+        {"object_id": "s", "name": "state", "type":"Text"},
+        {"object_id": "th", "name": "threshold", "type":"Integer"}
+        ],
+        "static_attributes": [
+        { "name":"refGarden", "type": "Relationship", "value": "urn:ngsi-ld:Garden:001"}
+        ]
+      }
     ]
     
   }'
+# pump endpoint : "http://localhost:5002/"
+
+# sending measurments to iot agent 
+  
+#soilmoisture001
+
+curl -iX POST \
+  'http://localhost:7896/iot/json?k=a1cc95dd-1b0c-41a9-83aa-f2239a3e22e5&i=soilmoisture001' \
+  -H 'Content-Type: application/json' \
+  -d '{"sm": "70"}'   
 
 
-#  adding actuator
-#       ,
-#       {
-#         "device_id":   "pump001",
-#         "entity_name": "urn:ngsi-ld:Pump:001",
-#         "entity_type": "Pump",
-#         "transport": "HTTP",
-#         "endpoint": "http://iot-sensors:3001/iot/bell001",   <-- should be address for the pump 
-#         "commands": [
-#         {"name": "on","type": "command"},
-#         {"name": "off","type": "command"}
-#         ],
-#         "attributes": [
-#         {"object_id": "s", "name": "state", "type":"Text"},
-#         {"object_id": "th", "name": "threshold", "type":"Integer"}
-#         ],
-#         "static_attributes": [
-#         { "name":"refGarden", "type": "Relationship", "value": "urn:ngsi-ld:Garden:001"}
-#         ]
-#       }
+#temperature001
+curl -iX POST \
+  'http://localhost:7896/iot/json?k=a1cc95dd-1b0c-41a9-83aa-f2239a3e22e5&i=temperature001' \
+  -H 'Content-Type: application/json' \
+  -d '{"t": "30"}' 
+
+## humidity001
+     curl -iX POST \
+  'http://localhost:7896/iot/json?k=a1cc95dd-1b0c-41a9-83aa-f2239a3e22e5&i=humidity001' \
+  -H 'Content-Type: application/json' \
+  -d '{"h": "44"}' 
+
+## pump001 state
+     curl -iX POST \
+  'http://localhost:7896/iot/json?k=a1cc95dd-1b0c-41a9-83aa-f2239a3e22e5&i=pump001' \
+  -H 'Content-Type: application/json' \
+  -d '{"s": "off"}' 

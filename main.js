@@ -3,7 +3,6 @@ const axios = require('axios');
 
 const app = express();
 app.use(express.json());
-// // get for the actuator for status
 // // get for each sensor reading
 app.get('/soil-moisture', async (req, res) => {
     try {
@@ -13,7 +12,7 @@ app.get('/soil-moisture', async (req, res) => {
             'fiware-servicepath': '/'
         } 
         const response = await axios.get(url, { headers });
-        res.json(response.data);
+        res.send(response.data);
     } catch (error) {
         console.error(error);
         res.status(500).send('Something went wrong');
@@ -28,7 +27,7 @@ app.get('/temperature', async (req, res) => {
             'fiware-servicepath': '/'
         }
         const response = await axios.get(url, { headers });
-        res.json(response.data);
+        res.send(response.data);
     } catch (error) {
         console.error(error);
         res.status(500).send('Something went wrong');
@@ -43,7 +42,7 @@ app.get('/humidity', async (req, res) => {
             'fiware-servicepath': '/'
         }
         const response = await axios.get(url, { headers });
-        res.json(response.data);
+        res.send(response.data);
     } catch (error) {
         console.error(error);
         res.status(500).send('Something went wrong');
@@ -58,7 +57,7 @@ app.get('/actoatorState', async (req, res) => {
             'fiware-servicepath': '/'
         }
         const response = await axios.get(url, { headers });
-        res.json(response.data);
+        res.send(response.data);
     } catch (error) {
         console.error(error);
         res.status(500).send('Something went wrong');
@@ -73,7 +72,6 @@ app.patch('/pumpThreshold', (req, res) => {
         'fiware-servicepath': '/'
     };
     const data = req.body;
-    console.log(data)
     axios.patch(url, data, { headers })
         .then(response => {
             res.status(response.status).send(response.data);

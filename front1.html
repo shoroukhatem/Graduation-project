@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sensor Data Dashboard</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./main.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="title-box">
+      <h1>Sensor Data Dashboard</h1>
+    </div>
+    <div class="container2">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="sensor-box" id="temperature-sensor-box">
+            <h2>Temperature Sensor</h2>
+            <div class="sensor-value" id="temperature-value">--</div>
+            <div class="sensor-unit">°C</div>
+            <div class="chart-container">
+              <canvas id="temperature-chart"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="sensor-box" id="humidity-sensor-box">
+            <h2>Humidity Sensor</h2>
+            <div class="sensor-value" id="humidity-value">--</div>
+            <div class="sensor-unit">%</div>
+            <div class="chart-container">
+              <canvas id="humidity-chart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="sensor-box" id="moisture-sensor-box">
+            <h2>Moisture Sensor</h2>
+            <div class="sensor-value" id="moisture-value">--</div>
+            <div class="sensor-unit">%</div>
+            <div class="chart-container">
+              <canvas id="moisture-chart"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="sensor-box">
+            <div class="threshold-box">
+              <label for="threshold-input">Threshold:</label>
+              <input type="range" onmousemove="updateThresholdValue()" id="threshold-input" min="0" max="100" step="1" value="0">
+              <span id="threshold-value">0</span>
+            </div>
+            <h4>Actuator</h4>
+            <div class="actuator-controls">
+              <div id="actuator-status" class="actuator-off actuator-on"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="grafana-button">
+        <a href="http://localhost:3003/" target="_blank">
+          Open Grafana
+          <img src="grafana.png" alt="Grafana Logo" width="20" height="20">
+        </a>
+      </div>
+    </div>
+  </div>
+ <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  <script src="../backend/node_modules/axios/dist/axios.min.js"></script>
+  <script src="./frontend.js"></script>
+</body>
+ </html>

@@ -1,0 +1,159 @@
+
+body {
+    background-image: url('smart-world-solutions-okdo-6.webp'); 
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: Arial, sans-serif;
+    background-attachment: fixed;
+}
+.title-box {
+    background-color: #7d9777;
+    border: 2px solid #111411;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+h1 {
+    margin: 0;
+    color: #faf7f7;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.sensor-box {
+    background-color: #e0f0e0;
+    border: 1px solid #a3c2a0;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    opacity: 87%;
+    }
+  
+#temperature-sensor-box {
+  background-image: url('temp.png');
+  background-repeat: no-repeat;
+  background-position: right;
+}
+
+#humidity-sensor-box {
+  background-image: url('3262966.png');
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: 40%;
+}
+
+#moisture-sensor-box {
+  background-image: url('moisture.png');
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: 50%;
+}
+
+    h2 {
+      color: #0f0f0f;
+      font-size: 18px;
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    .sensor-value {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .chart-container {
+      position: relative;
+      height: 50px;
+    }
+
+
+    .threshold-value {
+      margin-top: 10px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .grafana-button {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .grafana-button a {
+      display: inline-block;
+      padding: 10px;
+      background-color: #3bb679;
+      color: #ffffff;
+      text-decoration: none;
+      border: 1px solid #ffffff;
+      border-radius: 5px;
+    }
+
+    .grafana-button a img {
+      vertical-align: middle;
+      margin-left: 5px;
+    }
+
+
+    .threshold-box {
+      background-color: #d8e8d4;
+      border: 2px solid #a3c2a0;
+      border-radius: 5px;
+      padding: 10px;
+      height: 50px;
+      margin-top: 20px;
+      margin-bottom: 30px;
+     
+    }
+    
+
+    .container2 {
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+
+
+.actuator-box {
+  flex: 0 0 49%; /* Adjust the width as needed */
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  border-style:  ridge;
+  padding-top: 20px;
+}
+
+#actuator-status {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-left: 20px;
+  position: absolute ;
+  left: 25%;
+  bottom: 31%;
+}
+
+.actuator-on {
+  background-color: green;
+}
+
+.actuator-off {
+  background-color: red;
+  
+}
+.actuator-controls {
+  display: flex;
+  align-items: center;
+}
+
+
+.thresholdout-box{
+  flex: 0 0 49%; /* Adjust the width as needed */
+ 
+}

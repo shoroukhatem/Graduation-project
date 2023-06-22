@@ -1,6 +1,5 @@
 const express = require('express');
 const axios = require('axios');
-
 const app = express();
 // middleware
 app.use(function (req, res, next) {
@@ -8,11 +7,12 @@ app.use(function (req, res, next) {
     // Websites
     res.setHeader('Access-Control-Allow-Origin', '*');
 
-    // Request methods 
+    // // Request methods 
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST,PATCH');
 
-    // Request headers
-    res.setHeader('Access-Control-Allow-Headers', 'content-type');
+    // // Request headers
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', false);
 
     next();
 });
@@ -76,8 +76,10 @@ app.get('/actoatorState', async (req, res) => {
         res.status(500).send('Something went wrong');
     }
 });
+app.use(express.json());
 //actoator threshold
 app.patch('/pumpThreshold', (req, res) => {
+    // res.setHeader('Access-Control-Allow-Origin', '*');
     const url = "http://localhost:1026/v2/entities/urn:ngsi-ld:Pump:001/attrs";
     const headers = {
         'Content-Type': 'application/json',
@@ -94,9 +96,15 @@ app.patch('/pumpThreshold', (req, res) => {
         });
 });
 
-// Subscribing To Changes Of State
-
-
+// // Subscribing To Changes Of State
+// app.use(express.json())
+// var notify = "empty"
+// app.post("/subscription/:type",(req, res) => {
+// res.status(204).send();
+// });
+// app.get("/subscription",(req, res) => {
+//     res.json(notify)
+// })
 // make server enable access
 app.listen(5000, () => {
     console.log('Server listening on port 5000');

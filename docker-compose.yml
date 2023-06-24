@@ -57,6 +57,19 @@ services:
     networks:
       - fiware_network
 
+  crate-db:
+      image: crate:latest
+      hostname: crate-db
+      ports:
+        - "4200:4200"
+      command: crate -Cauth.host_based.enabled=false -Ccluster.name=democluster -Chttp.cors.enabled=true -Cnode.store.allow_mmap=false -Chttp.cors.allow-origin='*'
+      environment:
+        - CRATE_HEAP_SIZE=2g
+      volumes:
+        - ./data/crate:/data/crate-db-data
+      networks:
+      - fiware_network
+  
   quantumleap:
     image: smartsdk/quantumleap
     hostname: quantumleap
@@ -65,23 +78,12 @@ services:
     depends_on:
       - crate-db
     environment:
-      - QL_DB_BACKEND=crate-db
-      - QL_DB_URI=http://crate:4200
-      - QL_LOG_LEVEL=DEBUG
+      - CRATE_HOST=crate-db
+      - LOGLEVEL=DEBUG
     networks:
       - fiware_network
 
-  crate-db:
-    image: crate:latest
-    hostname: crate-db
-    ports:
-      - "4200:4200"
-      - "4300:4300"
-    command: crate -Cauth.host_based.enabled=false -Ccluster.name=democluster -Chttp.cors.enabled=true -Cnode.store.allow_mmap=false -Chttp.cors.allow-origin='*'
-    environment:
-      - CRATE_HEAP_SIZE=2g
-    volumes:
-      - ./data/crate:/data/crate-db-data
+ 
 
   grafana:
     image: grafana/grafana

@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Garden Model in cairo university 
-# Latitude: 30° 01' 39.36" N  Longitude: 31° 12' 36.50" E
-# Entity Type Names Must Start With A Capital Letter
-# Follows schema.org  and Data Model Guidelines
+# # Garden Model in cairo university 
+# # Latitude: 30° 01' 39.36" N  Longitude: 31° 12' 36.50" E
+# # Entity Type Names Must Start With A Capital Letter
+# # Follows schema.org  and Data Model Guidelines
 
 curl -iX POST \
   --url 'http://localhost:1026/v2/op/update' \
@@ -130,23 +130,216 @@ curl -iX POST \
 curl -iX POST \
   'http://localhost:7896/iot/json?k=a1cc95dd-1b0c-41a9-83aa-f2239a3e22e5&i=soilmoisture001' \
   -H 'Content-Type: application/json' \
-  -d '{"sm": "70"}'   
+  -d '{"sm": "60"}'   
 
 
-#temperature001
+# #temperature001
 curl -iX POST \
   'http://localhost:7896/iot/json?k=a1cc95dd-1b0c-41a9-83aa-f2239a3e22e5&i=temperature001' \
   -H 'Content-Type: application/json' \
-  -d '{"t": "30"}' 
+  -d '{"t": "20"}' 
 
-## humidity001
-     curl -iX POST \
+# ## humidity001
+curl -iX POST \
   'http://localhost:7896/iot/json?k=a1cc95dd-1b0c-41a9-83aa-f2239a3e22e5&i=humidity001' \
   -H 'Content-Type: application/json' \
-  -d '{"h": "44"}' 
+  -d '{"h": "30"}' 
 
-## pump001 state
-     curl -iX POST \
+# ## pump001 state
+curl -iX POST \
   'http://localhost:7896/iot/json?k=a1cc95dd-1b0c-41a9-83aa-f2239a3e22e5&i=pump001' \
   -H 'Content-Type: application/json' \
-  -d '{"s": "off"}' 
+  -d '{"s": "on"}' 
+
+
+
+#  Subscribing To Changes Of State
+
+# soilmoisture
+# curl -iX POST \
+#   --url 'http://localhost:1026/v2/subscriptions' \
+#   --header 'content-type: application/json' \
+#   --data '{
+#   "description": "Notify me of all SoilMoisture sensor measurement changes",
+#   "subject": {
+#     "entities": [{"idPattern": "soilmoisture.*", "type": "SoilMoisture"}],
+#     "condition": {
+#       "attrs": [ "soilmoisture" ]
+#     }
+#   },
+#   "notification": {
+#     "http": {
+#       "url": "http://localhost:5000/subscription/soilmoisture-measurement-change"
+#     }
+#   }
+# }'
+
+
+curl -iX PATCH \
+  'http://localhost:1026/v2/entities/urn:ngsi-ld:Pump:001/attrs' \
+  -H 'Content-Type: application/json' \
+  -H 'fiware-service: openiot' \
+  -H 'fiware-servicepath: /' \
+  -d '{
+  "threshold":{
+  "type":"attribute",
+  "value":50
+}
+}'
+
+curl -iX PATCH \
+  'http://localhost:1026/v2/entities/urn:ngsi-ld:Temperature:001/attrs' \
+  -H 'Content-Type: application/json' \
+  -H 'fiware-service: openiot' \
+  -H 'fiware-servicepath: /' \
+  -d '{
+  "temperature":{
+  "type":"attribute",
+  "value":50
+}
+}'
+
+# QuantumLeap 
+
+curl -iX POST \
+  'http://localhost:1026/v2/subscriptions/' \
+  -H 'Content-Type: application/json' \
+  -H 'fiware-service: openiot' \
+  -H 'fiware-servicepath: /' \
+  -d '{
+  "description": "Notify QuantumLeap of count changes of any soilmoisture Sensor",
+  "subject": {
+    "entities": [
+      {
+        "idPattern": "SoilMoisture.*"
+      }
+    ],
+    "condition": {
+      "attrs": [
+        "soilmoisture"
+      ]
+    }
+  },
+  "notification": {
+    "http": {
+      "url": "http://quantumleap:8668/v2/notify"
+    },
+    "attrs": [
+      "soilmoisture"
+    ],
+    "metadata": ["dateCreated", "dateModified"]
+  },
+  "throttling": 1
+}'
+
+# Subscription for Temperature Sensor
+curl -iX POST \
+  'http://localhost:1026/v2/subscriptions/' \
+  -H 'Content-Type: application/json' \
+  -H 'fiware-service: openiot' \
+  -H 'fiware-servicepath: /' \
+  -d '{
+  "description": "Notify QuantumLeap of count changes of any Temperature Sensor",
+  "subject": {
+    "entities": [
+      {
+        "idPattern": "Temperature.*"
+      }
+    ],
+    "condition": {
+      "attrs": [
+        "temperature"
+      ]
+    }
+  },
+  "notification": {
+    "http": {
+      "url": "http://quantumleap:8668/v2/notify"
+    },
+    "attrs": [
+      "temperature"
+    ],
+    "metadata": ["dateCreated", "dateModified"]
+  },
+  "throttling": 1
+}'
+
+# Subscription for Humidity Sensor
+curl -iX POST \
+  'http://localhost:1026/v2/subscriptions/' \
+  -H 'Content-Type: application/json' \
+  -H 'fiware-service: openiot' \
+  -H 'fiware-servicepath: /' \
+  -d '{
+  "description": "Notify QuantumLeap of count changes of any Humidity Sensor",
+  "subject": {
+    "entities": [
+      {
+        "idPattern": "Humidity.*"
+      }
+    ],
+    "condition": {
+      "attrs": [
+        "humidity"
+      ]
+    }
+  },
+  "notification": {
+    "http": {
+      "url": "http://quantumleap:8668/v2/notify"
+    },
+    "attrs": [
+      "humidity"
+    ],
+    "metadata": ["dateCreated", "dateModified"]
+  },
+  "throttling": 1
+}'
+
+# Subscription for Pump
+curl -iX POST \
+  'http://localhost:1026/v2/subscriptions/' \
+  -H 'Content-Type: application/json' \
+  -H 'fiware-service: openiot' \
+  -H 'fiware-servicepath: /' \
+  -d '{
+  "description": "Notify QuantumLeap of count changes of the Pump",
+  "subject": {
+    "entities": [
+      {
+        "idPattern": "Pump.*"
+      }
+    ],
+    "condition": {
+      "attrs": [
+        "state"
+      ]
+    }
+  },
+  "notification": {
+    "http": {
+      "url": "http://quantumleap:8668/v2/notify"
+    },
+    "attrs": [
+      "state"
+    ],
+    "metadata": ["dateCreated", "dateModified"]
+  },
+  "throttling": 1
+}'
+curl -X GET \
+  'http://localhost:1026/v2/subscriptions/' \
+  -H 'fiware-service: openiot' \
+  -H 'fiware-servicepath: /'
+
+curl -X GET \
+  'http://localhost:8668/v2/entities/Temperature:001/attrs/temperature?limit=1' \
+  -H 'Accept: application/json' \
+  -H 'Fiware-Service: openiot' \
+  -H 'Fiware-ServicePath: /'
+
+curl -X GET \
+  'http://localhost:1026/v2/subscriptions/' \
+  -H 'fiware-service: openiot' \
+  -H 'fiware-servicepath: /'
+

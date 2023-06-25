@@ -75,7 +75,7 @@ app.get('/actoatorState', async (req, res) => {
         console.error(error);
         res.status(500).send('Something went wrong');
     }
-});
+}); 
 app.use(express.json());
 //actoator threshold
 app.patch('/pumpThreshold', (req, res) => {
@@ -95,17 +95,23 @@ app.patch('/pumpThreshold', (req, res) => {
             res.status(error.response.status).send(error.response.data);
         });
 });
+app.patch('/pumpCommands', (req, res) => {
+    const url = "http://localhost:1026/v2/entities/urn:ngsi-ld:Pump:001/attrs";
+    const headers = {
+        'Content-Type': 'application/json',
+        'fiware-service': 'openiot',
+        'fiware-servicepath': '/'
+    };
+    const data = req.body;
+    axios.patch(url, data, { headers })
+        .then(response => {
+            res.status(response.status).send(response.data);
+        })
+        .catch(error => {
+            res.status(error.response.status).send(error.response.data);
+        });
+});
 
-// // Subscribing To Changes Of State
-// app.use(express.json())
-// var notify = "empty"
-// app.post("/subscription/:type",(req, res) => {
-// res.status(204).send();
-// });
-// app.get("/subscription",(req, res) => {
-//     res.json(notify)
-// })
-// make server enable access
 app.listen(5000, () => {
     console.log('Server listening on port 5000');
 });

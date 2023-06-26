@@ -1,159 +1,255 @@
 
 body {
-    background-image: url('smart-world-solutions-okdo-6.webp'); 
-    background-repeat: no-repeat;
-    background-size: cover;
-    font-family: Arial, sans-serif;
-    background-attachment: fixed;
+  background-image: url('smart-world-solutions-okdo-6.webp');
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: Arial, sans-serif;
+  background-attachment: fixed;
 }
 .title-box {
-    background-color: #7d9777;
-    border: 2px solid #111411;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 20px;
-    text-align: center;
+  background-color: #7d9777;
+  border: 0px solid #111411;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 20px;
+  text-align: center;
 }
 h1 {
-    margin: 0;
-    color: #faf7f7;
+  margin: 0;
+  color: #faf7f7;
 }
 
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2px;
 }
 
 .sensor-box {
-    background-color: #e0f0e0;
-    border: 1px solid #a3c2a0;
-    border-radius: 5px;
-    padding: 20px;
-    margin-bottom: 20px;
-    opacity: 87%;
-    }
-  
-#temperature-sensor-box {
-  background-image: url('temp.png');
+  background-color: #e0f0e0;
+  border: 1px solid #a3c2a0;
+  border-radius: 5px;
+  padding: 25px;
+  margin-bottom: 20px;
+  opacity: 87%;
+  background-image: url('./pump.png');
+  background-size:38%;
   background-repeat: no-repeat;
   background-position: right;
+  }
+
+#temperature-sensor-box {
+background-image: url('temp.png');
+background-repeat: no-repeat;
+background-position: right;
 }
 
 #humidity-sensor-box {
-  background-image: url('3262966.png');
-  background-repeat: no-repeat;
-  background-position: right;
-  background-size: 40%;
+background-image: url('3262966.png');
+background-repeat: no-repeat;
+background-position: right;
+background-size: 38%;
 }
 
 #moisture-sensor-box {
-  background-image: url('moisture.png');
-  background-repeat: no-repeat;
-  background-position: right;
-  background-size: 50%;
+background-image: url('moisture.png');
+background-repeat: no-repeat;
+background-position: right;
+background-size: 46%;
 }
 
-    h2 {
-      color: #0f0f0f;
-      font-size: 18px;
-      margin-top: 0;
-      margin-bottom: 10px;
-    }
+  h2 {
+    color: #0f0f0f;
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
 
-    .sensor-value {
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
+  .sensor-value {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
 
-    .chart-container {
-      position: relative;
-      height: 50px;
-    }
-
-
-    .threshold-value {
-      margin-top: 10px;
-      text-align: center;
-      font-weight: bold;
-    }
-
-    .grafana-button {
-      text-align: center;
-      margin-top: 20px;
-    }
-
-    .grafana-button a {
-      display: inline-block;
-      padding: 10px;
-      background-color: #3bb679;
-      color: #ffffff;
-      text-decoration: none;
-      border: 1px solid #ffffff;
-      border-radius: 5px;
-    }
-
-    .grafana-button a img {
-      vertical-align: middle;
-      margin-left: 5px;
-    }
+  .chart-container {
+    position: relative;
+    height: 50px;
+  }
 
 
-    .threshold-box {
-      background-color: #d8e8d4;
-      border: 2px solid #a3c2a0;
-      border-radius: 5px;
-      padding: 10px;
-      height: 50px;
-      margin-top: 20px;
-      margin-bottom: 30px;
-     
-    }
-    
+  .threshold-value {
+    margin-top: 10px;
+    text-align: center;
+    font-weight: bold;
+  }
 
-    .container2 {
-      max-width: 1500px;
-      margin: 0 auto;
-      padding: 20px;
-    }
+  .grafana-button {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .grafana-button a {
+    display: inline-block;
+    padding: 10px;
+    background-color: #3bb679;
+    color: #ffffff;
+    text-decoration: none;
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+  }
+
+  .grafana-button a img {
+    vertical-align: middle;
+    margin-left: 5px;
+  }
+
+
+  .threshold-box {
+    background-color: #d8e8d4;
+    border: 2px solid #a3c2a0;
+    border-radius: 5px;
+    padding: 10px;
+    height: 50px;
+    width:300px;
+    margin-top: 20px;
+    margin-bottom: 7px;   
+  }
+
+
+  .container2 {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 20px;
+  }
 
 
 
 .actuator-box {
-  flex: 0 0 49%; /* Adjust the width as needed */
-  display: flex;
-  align-items: center;
-  border-radius: 5px;
-  border-style:  ridge;
-  padding-top: 20px;
+flex: 0 0 49%; /* Adjust the width as needed */
+display: flex;
+align-items: center;
+border-radius: 5px;
+border-style:  solid;
+padding-top: 20px;
 }
 
+
+
+
+
+.actuator-controls {
+display: flex;
+align-items: center;
+}
+
+
+.thresholdout-box{
+flex: 0 0 49%; /* Adjust the width as needed */
+
+}
 #actuator-status {
   width: 20px;
   height: 20px;
   border-radius: 50%;
   margin-left: 20px;
   position: absolute ;
-  left: 25%;
-  bottom: 31%;
+  left: 15%;
+  bottom:62%;
+  }
+
+/* CSS Styles */
+.actuator-status {
+color:red;
+font-size: x-large;
+font-weight: bold;
+}
+.actuator-status.on {
+color:#3dc70b ;
+}
+.actuator-status.off {
+  color:red;
+  }
+/* CSS Styles */
+/* .btn {
+padding: 8px 7px;
+font-size: large;
+background-color:#FF4136;
+border: none;
+cursor: pointer;
+position: absolute;
+left: 48%;
+bottom: 72%;
+} */
+
+/* CSS Styles */
+.hidden {
+display: block;
+color: #eb1111;
+font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+stroke: #0f0f0f;
 }
 
-.actuator-on {
-  background-color: green;
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  left: 10%;
 }
 
-.actuator-off {
-  background-color: red;
-  
-}
-.actuator-controls {
-  display: flex;
-  align-items: center;
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
 
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
 
-.thresholdout-box{
-  flex: 0 0 49%; /* Adjust the width as needed */
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #21f32f;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #21f32f;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
  
-}

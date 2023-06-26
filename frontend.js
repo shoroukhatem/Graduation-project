@@ -65,24 +65,68 @@ axios.patch("http://localhost:5000/pumpThreshold",data,{ headers } )
 document.getElementById('threshold-input').addEventListener('input', updateThresholdValue);
 
 
-// Call the function to update moisture sensor data initially
+// PUMP Code
+
+
 
 // Function to update the actuator status display
 async function updateActuatorStatus(status) {
-const valueElement = document.getElementById('actuator-status');
-valueElement.classList.remove('actuator-on', 'actuator-off');
-// Update status text and apply corresponding class
-valueElement.classList.add(status? 'actuator-on' : 'actuator-off');
+  const actuatorStatusElement = document.getElementById("actuator-status");
+  const toggleSwitch =document.querySelector('.switch input');
+  actuatorStatusElement.textContent = status === "on" ? "On" : "Off";
+  actuatorStatusElement.classList.toggle("on", status === "on");
+  toggleSwitch.checked = status === "on" ? true : false;
+
 }
 async function ActuatorStatus(){
   var status = false;
   const response = await axios.get('http://localhost:5000/actoatorState');
   const actoatorStatus = response.data.state;
-  if (actoatorStatus == "on"){
-     status = true;
-  }
-  updateActuatorStatus(status);
+
+  updateActuatorStatus(actoatorStatus);
 }
+async function PumpCommand(command){
+  if (command === "on") {
+    const data = {
+      "state": {
+        "type" : "attribute",
+        "value" : "on"
+    }
+    };
+    
+    const headers = {
+      'content-type': 'application/json'
+    };
+    axios.patch("http://localhost:5000/pumpCommands",data,{ headers } )
+    .then((res)=>console.log(res))     
+    .catch((err)=>console.log(err))
+    ActuatorStatus();
+  } else {
+    const data = {
+      "state": {
+          "type" : "attribute",
+          "value" : "off"
+      }
+    };
+    
+    const headers = {
+      'content-type': 'application/json'
+    };
+    axios.patch("http://localhost:5000/pumpCommands",data,{ headers } )
+    .then((res)=>console.log(res))     
+    .catch((err)=>console.log(err))
+    ActuatorStatus();
+  }
+}
+const Switch = document.querySelector('.switch input');
+Switch.addEventListener('click',()=>{
+  if(Switch.checked){
+    PumpCommand('on');
+  }
+  else{
+    PumpCommand('off');
+  }
+});
 
 function liveData(){
   setInterval(function(){

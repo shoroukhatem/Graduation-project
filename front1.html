@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sensor Data Dashboard</title>
+  <title>Smart Agriculture</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
   <link rel="stylesheet" href="./main.css">
 </head>
@@ -12,13 +12,13 @@
 <body>
   <div class="container">
     <div class="title-box">
-      <h1>Sensor Data Dashboard</h1>
+      <h1>Smart Agriculture</h1>
     </div>
     <div class="container2">
       <div class="row">
         <div class="col-md-6">
           <div class="sensor-box" id="temperature-sensor-box">
-            <h2>Temperature Sensor</h2>
+            <h4>Temperature Sensor</h4>
             <div class="sensor-value" id="temperature-value">--</div>
             <div class="sensor-unit">°C</div>
             <div class="chart-container">
@@ -28,7 +28,7 @@
         </div>
         <div class="col-md-6">
           <div class="sensor-box" id="humidity-sensor-box">
-            <h2>Humidity Sensor</h2>
+            <h4>Humidity Sensor</h4>
             <div class="sensor-value" id="humidity-value">--</div>
             <div class="sensor-unit">%</div>
             <div class="chart-container">
@@ -41,7 +41,7 @@
       <div class="row">
         <div class="col-md-6">
           <div class="sensor-box" id="moisture-sensor-box">
-            <h2>Moisture Sensor</h2>
+            <h4>Moisture Sensor</h4>
             <div class="sensor-value" id="moisture-value">--</div>
             <div class="sensor-unit">%</div>
             <div class="chart-container">
@@ -51,22 +51,37 @@
         </div>
         <div class="col-md-6">
           <div class="sensor-box">
-            <div class="threshold-box">
-              <label for="threshold-input">Threshold:</label>
-              <!-- changed onmousemove -->
-              <input type="range" ondblclick="updateThresholdValue()" id="threshold-input" min="0" max="100" step="1" value="0"> 
-              <span id="threshold-value">0</span>
-            </div>
-            <h4>Actuator</h4>
-            <div class="actuator-controls">
-              <div id="actuator-status" class="actuator-off actuator-on"></div>
+              
+              <div class="Pump">
+                <h4>Water Pump   <label class="switch">
+                  <input type="checkbox" >
+                  <span class="slider round"></span>
+                </label></h4>
+                <div class="actuator-controls">
+                  <h2>Status:</h2>
+                  <div id="actuator-status" class="actuator-status">Off</div>    
+                  </div> 
+                <!--Actuator Command -->
+                
+                <!-- <button id="actuator-toggle" class="btn" onclick=" ActuatorStatus()">Turn On</button> -->
+              </div>
+            
+        
+              <div class="threshold-box">
+                <label for="threshold-input"><h2>Threshold:</h2></label>
+                <span id="threshold-value">0</span>
+                <!-- changed onmousemove -->
+                <input type="range" ondblclick="updateThresholdValue()" id="threshold-input" min="0" max="100" step="1" value="0">
+               
+               
+              </div>          
             </div>
           </div>
         </div>
       </div>
       <div class="grafana-button">
-        <a href="http://localhost:3003/" target="_blank">
-          Open Grafana
+        <a href="http://localhost:3003/d/a034838f-e9f2-40ff-aaa6-328c882e2c4d/graduation-project?orgId=1&from=1687794313368&to=1687795735050" target="_blank">
+          History
           <img src="grafana.png" alt="Grafana Logo" width="20" height="20">
         </a>
       </div>
@@ -75,7 +90,8 @@
  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-  <script src="./node_modules/axios/dist/axios.min.js"></script>
+  <script src="../backend/node_modules/axios/dist/axios.min.js"></script>
   <script src="./frontend.js"></script>
+
 </body>
  </html>

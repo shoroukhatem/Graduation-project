@@ -252,4 +252,34 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
- 
+
+#toggle-btn {
+  background-color: #3498db;
+  border: none;
+  color: #fff;
+  padding: 5px 10px;
+  font-size:  16px;
+  font-weight: bold;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0px 3px 0px #2980b9;
+  transition: background-color 0.3s ease-in-out;
+  outline: none;
+  position: relative; 
+  bottom: 100%; 
+  left: 35%;
+}
+
+#toggle-btn.active {
+  background-color: #27ae60;
+  box-shadow: 0px 3px 0px #219653;
+}
+
+#toggle-btn:active {
+  box-shadow: 0px 1px 0px #2980b9;
+  transform: translateY(2px);
+}
+
+#toggle-btn:focus {
+  box-shadow: 0px 0px 0px 4px rgba(52, 152, 219, 0.4);
+}

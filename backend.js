@@ -8,7 +8,7 @@ app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
 
     // // Request methods 
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST,PATCH');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, PUT , POST , PATCH , DELETE');
 
     // // Request headers
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
@@ -110,6 +110,32 @@ app.patch('/pumpCommands', (req, res) => {
         .catch(error => {
             res.status(error.response.status).send(error.response.data);
         });
+});
+//pump url
+app.use(express.json());
+app.get('/pumpURL', (req, res) => {
+    console.log(req.body);
+    res.json(req.body);
+});
+app.post('/pumpURL', (req, res) => {
+    const data ={
+        "id": "urn:ngsi-ld:Pump:001",
+        "status": "success",
+        "command": "off",
+        "message": "Light bulb turned off",
+        "value": true,
+        "timestamp": "2023-07-01T10:30:00Z"
+      }
+    console.log(req.body);
+    res.json(data);
+});
+app.put('/pumpURL', (req, res) => {
+    console.log(req.body);
+    res.send(req.body);
+});
+app.patch('/pumpURL', (req, res) => {
+    console.log(req.body);
+    res.send(req.body);
 });
 
 app.listen(5000, () => {

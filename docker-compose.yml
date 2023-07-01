@@ -107,5 +107,3 @@ volumes:
   mongodb_data: ~
   crate-db_data: ~
   grafana: ~
-
-

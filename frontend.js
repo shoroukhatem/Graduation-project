@@ -1,12 +1,26 @@
 
-
+var moistureData = 0.0;
+var thresholdInput = 0;
 async function fetchTemperatureData() {
   try {
     const response = await axios.get("http://localhost:5000/temperature"); // Replace "/api/get-value" with your backend endpoint
     const temperatureData = response.data.temperature; // Assuming the response contains a "value" property
-    // updatetemperatureData(temperatureValue);
+    var message = ""
+    if(temperatureData>28){
+      message="Give your plants extra water and skip fertilizing";
+    }
+    else if(temperatureData<15){
+      message="Get the plant to warmer temperatures as soon as you can"
+    }
+    else{
+      message="Temperature is good"
+    }
     const valueElement = document.getElementById("temperature-value");
     valueElement.textContent = temperatureData;
+    const tipElement = document.getElementById("temperature-tip");
+    tipElement.textContent = message;
+    
+    // const tip
   } catch (error) {
     console.error(error);
   }
@@ -16,9 +30,20 @@ async function fetchHumidityData() {
   try {
     const response = await axios.get("http://localhost:5000/humidity"); // Replace "/api/get-value" with your backend endpoint
     const humidityData = response.data.humidity; // Assuming the response contains a "value" property
-    // updatehumidityData(value);
+    var message = ""
+    if(humidityData >= 65){
+      message="use a heater or  dehumidifier";
+    }
+    else if(humidityData <= 55 ){
+      message="use a humidifier or spray some water around the garden."
+    }
+    else{
+      message="Humidity is good"
+    }
     const valueElement = document.getElementById("humidity-value");
     valueElement.textContent = humidityData;
+    const tipElement = document.getElementById("humidity-tip");
+    tipElement.textContent = message;
   } catch (error) {
     console.error(error);
   }
@@ -27,10 +52,22 @@ async function fetchHumidityData() {
 async function fetchMoistureData() {
   try {
     const response = await axios.get("http://localhost:5000/soil-moisture"); // Replace "/api/get-value" with your backend endpoint
-    const moistureData = response.data.soilmoisture; // Assuming the response contains a "value" property
-    // updateValue2(value);
+    moistureData = response.data.soilmoisture; // Assuming the response contains a "value" property
+    var message = ""
+    if(moistureData > 80){
+      message="keep moister 41% - 80%.";
+    }
+    else if(moistureData < 41 ){
+      message="keep moister 41% - 80%."
+    }
+    else{
+      message="Soil Moister is good"
+    }
     const valueElement = document.getElementById("moisture-value");
     valueElement.textContent = moistureData;
+    const tipElement = document.getElementById("moisture-tip");
+    tipElement.textContent = message;
+   
   } catch (error) {
     console.error(error);
   }
@@ -44,7 +81,7 @@ function updateSensorData() {
 
 // Attach an event listener to the threshold input element
 function updateThresholdValue() {
-  const thresholdInput = document.getElementById('threshold-input').value;
+  thresholdInput = document.getElementById('threshold-input').value;
   const thresholdValue = document.getElementById('threshold-value');
   thresholdValue.textContent = thresholdInput;
 //  console.log(document.getElementById('threshold-input').value)
@@ -79,13 +116,12 @@ async function updateActuatorStatus(status) {
 
 }
 async function ActuatorStatus(){
-  var status = false;
   const response = await axios.get('http://localhost:5000/actoatorState');
   const actoatorStatus = response.data.state;
 
   updateActuatorStatus(actoatorStatus);
 }
-async function PumpCommand(command){
+function PumpCommand(command){
   if (command === "on") {
     const data = {
       "state": {
@@ -118,6 +154,7 @@ async function PumpCommand(command){
     ActuatorStatus();
   }
 }
+// switch code
 const Switch = document.querySelector('.switch input');
 Switch.addEventListener('click',()=>{
   if(Switch.checked){
@@ -127,12 +164,55 @@ Switch.addEventListener('click',()=>{
     PumpCommand('off');
   }
 });
+// automation code
+function automaticPump(moistureData,thresholdInput){
+  
+  if(moistureData < thresholdInput){
+    PumpCommand('on');
+    console.log(moistureData);
+    console.log("on");
+    
+  }
+  else{
+    PumpCommand('off');
+    console.log(moistureData);
+    console.log("off");
+  }
+}
+var isAutomationActive = true; 
+function toggleOption() {
+  var btn = document.getElementById("toggle-btn");
+  if (btn.innerText === "Manual") {
+    btn.innerText = "Automatic";
+    btn.classList.add("active");
+    isAutomationActive = false;
+  } else {
+    btn.innerText = "Manual";
+    btn.classList.remove("active");
+    isAutomationActive = true;
+  }
+}
 
 function liveData(){
   setInterval(function(){
     updateSensorData();
     ActuatorStatus();
-  },3000)
+    if(isAutomationActive){
+      automaticPump(moistureData,thresholdInput);
+    }
+   else{
+    // switch code
+    const Switch = document.querySelector('.switch input');
+    Switch.addEventListener('click',()=>{
+    if(Switch.checked){
+      PumpCommand('on');
+    }
+    else{
+      PumpCommand('off');
+    }});
+   }
+
+  },4000)
 }
 
 document.addEventListener('DOMContentLoaded',function(){

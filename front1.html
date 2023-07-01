@@ -21,8 +21,8 @@
             <h4>Temperature Sensor</h4>
             <div class="sensor-value" id="temperature-value">--</div>
             <div class="sensor-unit">°C</div>
-            <div class="chart-container">
-              <canvas id="temperature-chart"></canvas>
+            <div id="temperature-tip">
+
             </div>
           </div>
         </div>
@@ -31,8 +31,7 @@
             <h4>Humidity Sensor</h4>
             <div class="sensor-value" id="humidity-value">--</div>
             <div class="sensor-unit">%</div>
-            <div class="chart-container">
-              <canvas id="humidity-chart"></canvas>
+            <div id="humidity-tip">
             </div>
           </div>
         </div>
@@ -44,8 +43,8 @@
             <h4>Moisture Sensor</h4>
             <div class="sensor-value" id="moisture-value">--</div>
             <div class="sensor-unit">%</div>
-            <div class="chart-container">
-              <canvas id="moisture-chart"></canvas>
+            <div id="moisture-tip" >
+              
             </div>
           </div>
         </div>
@@ -62,7 +61,7 @@
                   <div id="actuator-status" class="actuator-status">Off</div>    
                   </div> 
                 <!--Actuator Command -->
-                
+                <button id="toggle-btn" onclick="toggleOption()">Manual</button>
                 <!-- <button id="actuator-toggle" class="btn" onclick=" ActuatorStatus()">Turn On</button> -->
               </div>
             

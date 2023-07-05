@@ -8,14 +8,17 @@ app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
 
     // // Request methods 
-    res.setHeader('Access-Control-Allow-Methods', 'GET, PUT , POST , PATCH , DELETE');
+    res.setHeader('Access-Control-Allow-Methods', '*');
 
     // // Request headers
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Headers', '*');
     res.setHeader('Access-Control-Allow-Credentials', false);
 
     next();
 });
+process.on('uncaughtException', function (err) {
+    console.log(err);
+  });
 // // get for each sensor reading
 app.get('/soil-moisture', async (req, res) => {
     try {
@@ -111,32 +114,8 @@ app.patch('/pumpCommands', (req, res) => {
             res.status(error.response.status).send(error.response.data);
         });
 });
-//pump url
-app.use(express.json());
-app.get('/pumpURL', (req, res) => {
-    console.log(req.body);
-    res.json(req.body);
-});
-app.post('/pumpURL', (req, res) => {
-    const data ={
-        "id": "urn:ngsi-ld:Pump:001",
-        "status": "success",
-        "command": "off",
-        "message": "Light bulb turned off",
-        "value": true,
-        "timestamp": "2023-07-01T10:30:00Z"
-      }
-    console.log(req.body);
-    res.json(data);
-});
-app.put('/pumpURL', (req, res) => {
-    console.log(req.body);
-    res.send(req.body);
-});
-app.patch('/pumpURL', (req, res) => {
-    console.log(req.body);
-    res.send(req.body);
-});
+
+
 
 app.listen(5000, () => {
     console.log('Server listening on port 5000');

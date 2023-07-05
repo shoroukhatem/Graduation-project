@@ -12,7 +12,7 @@ curl -iX POST \
   "actionType":"append",
   "entities":[
     {
-"id": "urn:ngsi-ld:Garden:001",
+    "id": "urn:ngsi-ld:Garden:001",
     "type": "Garden",
     "address":{
       "type":"property",
@@ -105,7 +105,7 @@ curl -iX POST \
         "entity_name": "urn:ngsi-ld:Pump:001",
         "entity_type": "Pump",
         "transport": "HTTP",
-        "endpoint": "http://localhost:5000/pumpURL",
+        "endpoint": "http://192.168.1.100:8080/pump",
         "commands": [
         {"name": "on","type": "command"},
         {"name": "off","type": "command"}
@@ -121,6 +121,7 @@ curl -iX POST \
     ]
     
   }'
+
 # pump endpoint : "http://localhost:5000/"
 
 # sending measurments to iot agent 
@@ -149,7 +150,7 @@ curl -iX POST \
 curl -iX POST \
   'http://localhost:7896/iot/json?k=a1cc95dd-1b0c-41a9-83aa-f2239a3e22e5&i=pump001' \
   -H 'Content-Type: application/json' \
-  -d '{"s": "on"}' 
+  -d '{"s": "off"}' 
 
 
 
@@ -286,74 +287,19 @@ curl -iX POST \
   "throttling": 1
 }'
 
+# orion health check
 
+# curl -X GET \
+#   'http://localhost:1026/version'
+
+# # iot-agent health check
+
+# curl -X GET \
+#   'http://localhost:4041/iot/about'
+
+# # Checking Subscriptions For QuantumLeap
 
 # curl -X GET \
 #   'http://localhost:1026/v2/subscriptions/' \
 #   -H 'fiware-service: openiot' \
 #   -H 'fiware-servicepath: /'
-
-# curl -X GET \
-#   'http://localhost:8668/v2/entities/Temperature:001/attrs/temperature?limit=1' \
-#   -H 'Accept: application/json' \
-#   -H 'Fiware-Service: openiot' \
-#   -H 'Fiware-ServicePath: /'
-
-# curl -X GET \
-#   'http://localhost:1026/v2/subscriptions/' \
-#   -H 'fiware-service: openiot' \
-#   -H 'fiware-servicepath: /'
-
-
-
-
-  # curl -iX DELETE \
-  # --url 'http://localhost:1026/v2/subscriptions/6497236e3f1d44427d0b818b'
-
-
-
-
-# curl -iX PATCH \
-#   'http://localhost:1026/v2/entities/urn:ngsi-ld:Pump:001/attrs' \
-#   -H 'Content-Type: application/json' \
-#   -H 'fiware-service: openiot' \
-#   -H 'fiware-servicepath: /' \
-#   -d '{
-#   "threshold":{
-#   "type":"attribute",
-#   "value":50
-# }
-# }'
-
-# curl -iX PATCH \
-#   'http://localhost:1026/v2/entities/urn:ngsi-ld:Temperature:001/attrs' \
-#   -H 'Content-Type: application/json' \
-#   -H 'fiware-service: openiot' \
-#   -H 'fiware-servicepath: /' \
-#   -d '{
-#   "temperature":{
-#   "type":"attribute",
-#   "value":50
-# }
-# }'
-
-#  Subscribing To Changes Of State
-
-# soilmoisture
-# curl -iX POST \
-#   --url 'http://localhost:1026/v2/subscriptions' \
-#   --header 'content-type: application/json' \
-#   --data '{
-#   "description": "Notify me of all SoilMoisture sensor measurement changes",
-#   "subject": {
-#     "entities": [{"idPattern": "soilmoisture.*", "type": "SoilMoisture"}],
-#     "condition": {
-#       "attrs": [ "soilmoisture" ]
-#     }
-#   },
-#   "notification": {
-#     "http": {
-#       "url": "http://localhost:5000/subscription/soilmoisture-measurement-change"
-#     }
-#   }
-# }'

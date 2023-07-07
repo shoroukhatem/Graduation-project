@@ -125,8 +125,12 @@ function PumpCommand(command){
   if (command === "on") {
     const data = {
       "state": {
-        "type" : "attribute",
+        "type" : "Text",
         "value" : "on"
+    },
+    "on": {
+      "type" : "command",
+      "value" : ""
     }
     };
     
@@ -140,9 +144,13 @@ function PumpCommand(command){
   } else {
     const data = {
       "state": {
-          "type" : "attribute",
+          "type" : "Text",
           "value" : "off"
-      }
+      },
+      "off": {
+        "type" : "command",
+        "value" : ""
+    }
     };
     
     const headers = {
